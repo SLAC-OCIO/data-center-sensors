@@ -6,6 +6,7 @@ metric = 'temp'
 profiles = 
   'temp':
     max: 50
+    radius: 13
     gradient: 
       0.0: 'gray'
       0.2: 'cyan'
@@ -14,22 +15,20 @@ profiles =
       0.8: 'red'
   'pressure':
     max: 1500
+    radius: 13
     gradient:
       0.0: 'gray'
       0.5: 'cyan'
       0.8: 'yellow'
       0.6: 'orange'
 
-
 drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
-
   d3.select( layer_name ).append( 'canvas' )
     .style('top', 0)
     .style('left', 0)
     .attr( 'class', klass )
     .attr( 'width', width )
     .attr( 'height', height )
-
   plan = new Image()
   plan.src = src
   plan.onload = () -> 
@@ -40,36 +39,75 @@ drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='flo
     ctx.drawImage plan, 50, 0, width, width * plan.height / plan.width
     ctx.globalAlpha = 1.0
 
-# redraw = ( metric, sensors_layer=$('#contrast_circle') ) ->
-redraw = ( metric ) ->
-  drawHeatMap metric 
+last_metric = null
+redrawHeatMap = ( metric ) ->
+  if heatmap?
+    if last_metric != metric
+      console.log 'redraw: %o', heatmap
+      heatmap.configure
+        gradient: profiles[metric].gradient 
+        radius: profiles[metric].radius
+    heatmap.setData
+      max: profiles[metric].max
+      min: 0
+      data: regenData metric
+    last_metric = metric
 
 regenData = ( metric ) ->
   tuples = []
   for id in getSensorIds()
     t = getSensor id 
-    t.value = if id of data then parseFloat data[id][metric] else 0
+    t.value = if id of data then parseFloat data[id][metric] else null
     tuples.push t
   tuples
 
-drawHeatMap = ( metric ) ->
-  if heatmap?
-    # console.log 'redraw: %o', heatmap
-    heatmap.setData
-      max: profiles[metric].max
-      min: 0
-      data: regenData metric
 
-initHeatMap = ( layer_name, gradient={ 0.0: 'gray', 0.2: 'cyan', 0.4: 'yellow', 0.6: 'orange', 0.8: 'red' }, radius=13, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
+
+legendCanvas = document.createElement('canvas');
+legendCanvas.width = 100
+legendCanvas.height = 10
+legendCtx = legendCanvas.getContext('2d')
+gradientCfg = {}
+updateLegend = (data) ->
+  $('min').text = data.min
+  $('max').text = data.max
+  if data.gradient != gradientCfg
+    console.log 'updating legend %s, %s', data.min, data.max
+    gradientCfg = data.gradient
+    gradient = legendCtx.createLinearGradient(0, 0, 100, 1)
+    for key of gradientCfg
+      gradient.addColorStop(key, gradientCfg[key])
+    legendCtx.fillStyle = gradient
+    legendCtx.fillRect(0, 0, 100, 10)
+    $('gradient').src = legendCanvas.toDataURL()
+    console.log 'done'
+
+createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   console.log 'creating heatmap on %s', layer_name
+  # create legend
+  legendDiv = d3.select( layer_name ).append('div')
+    .attr('class', 'legend')
+    .style('position', 'absolute')
+    .style('top', 0)
+    .style('left', 0)
+    .attr('width',100)
+    .attr('height',10)
+  legendDiv.append('span')
+    .attr('id','min')
+  legendDiv.append('span')
+    .attr('id','max')
+  legendDiv.append('img')
+    .attr('id','gradient')
+    .attr('src', '')  
+  
   h337.create
     container: document.querySelector layer_name
-    gradient: gradient
-    radius: radius
+    radius: profiles[metric].radius
     maxOpacity: opacity[1]
     minOpacity: opacity[0]
     blur: blur
-
+    onExtremaChange: (d) ->
+      updateLegend(d)
 
 drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sensor_overlay' ) ->
   svg = d3.select( layer_name ).append('svg')
@@ -79,7 +117,6 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
     .attr( 'class', klass )
     .attr( 'width', width )
     .attr( 'height', height )
-  
   canvas = svg.append('g')
   console.log 'drawing sensors'
   canvas.selectAll('circle')
@@ -95,12 +132,12 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
       .attr('onclick', (d) -> "console.log('"+d._id+"')")
       .append('title')
         .text((d) -> d._id)
-    
+  
 Template.sensor_list.rendered = () ->
   div = '.heatmap'
   drawFloorPlan  div, "images/2nd-floor-plan.svg"
-  heatmap = initHeatMap div
-  redraw metric
+  heatmap = createHeatMap div
+  redrawHeatMap metric
   drawSensorLocations div
   
 Sensors.find().observe
@@ -108,11 +145,11 @@ Sensors.find().observe
     i = normaliseId( datum._id )
     # console.log 'sensor added: %s -> %s: %o', datum._id, i, datum
     data[i] = datum
-    redraw metric
+    redrawHeatMap metric
   changed: (datum) ->
     i = normaliseId( datum._id )
     # console.log 'sensor changed: %s -> %s', datum._id, i
     data[i] = datum
-    redraw metric
+    redrawHeatMap metric
 
 

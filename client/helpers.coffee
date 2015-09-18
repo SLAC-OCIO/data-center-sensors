@@ -40,14 +40,17 @@ Template.sensor_item.helpers
   id.substring(8)
 
 @getSensor = (id) ->
-  return {
-    _id: id
-    x: meta[id][1]
-    y: meta[id][2]
-    rack: meta[id][3]
-    aisle: meta[id][4]
-  }
-
+  out = {}
+  if id of meta
+    out = {
+      _id: id
+      x: meta[id][1]
+      y: meta[id][2]
+      rack: meta[id][3]
+      aisle: meta[id][4]
+    }
+  out
+  
 @getSensorIds = () ->
   k for own k of meta
   
