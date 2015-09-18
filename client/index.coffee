@@ -21,14 +21,23 @@ profiles =
       0.6: 'orange'
 
 
-drawFloorPlan = ( layer, src, alpha=0.3 ) ->
+drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
+
+  d3.select( layer_name ).append( 'canvas' )
+    .style('top', 0)
+    .style('left', 0)
+    .attr( 'class', klass )
+    .attr( 'width', width )
+    .attr( 'height', height )
+
   plan = new Image()
   plan.src = src
   plan.onload = () -> 
-    canvas = layer
+    # canvas = layer
+    canvas = $('.'+klass)
     ctx = canvas[0].getContext( '2d' )
     ctx.globalAlpha = alpha
-    ctx.drawImage plan, 50, 0, 1000, 1000 * plan.height / plan.width
+    ctx.drawImage plan, 50, 0, width, width * plan.height / plan.width
     ctx.globalAlpha = 1.0
 
 # redraw = ( metric, sensors_layer=$('#contrast_circle') ) ->
@@ -62,9 +71,17 @@ initHeatMap = ( layer_name, gradient={ 0.0: 'gray', 0.2: 'cyan', 0.4: 'yellow', 
     blur: blur
 
 
-drawSensorLocations = ( layer, radius=3 ) ->
-  canvas = d3.select( layer ).append('g')
-  console.log 'redrawing sensors %o', canvas
+drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sensor_overlay' ) ->
+  svg = d3.select( layer_name ).append('svg')
+    .style('position', 'absolute')
+    .style('top', 0)
+    .style('left', 0)
+    .attr( 'class', klass )
+    .attr( 'width', width )
+    .attr( 'height', height )
+  
+  canvas = svg.append('g')
+  console.log 'drawing sensors'
   canvas.selectAll('circle')
     .data( getAllSensors() ).enter()
     .append('circle')
@@ -74,17 +91,18 @@ drawSensorLocations = ( layer, radius=3 ) ->
       .attr('cy', (d) -> d.y)
       .attr('r', radius )
       .attr('fill', 'blue')
+      .attr('title', (d) -> d._id )
       .attr('onclick', (d) -> "console.log('"+d._id+"')")
       .append('title')
         .text((d) -> d._id)
     
 Template.sensor_list.rendered = () ->
-  drawFloorPlan $('#floorplan_overlay'), "images/2nd-floor-plan.svg"
-  heatmap = initHeatMap '.heatmap'
-  console.log 'created map: %o', heatmap
+  div = '.heatmap'
+  drawFloorPlan  div, "images/2nd-floor-plan.svg"
+  heatmap = initHeatMap div
   redraw metric
-  drawSensorLocations '.sensor_overlay'
-
+  drawSensorLocations div
+  
 Sensors.find().observe
   added: (datum) ->
     i = normaliseId( datum._id )

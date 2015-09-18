@@ -8,15 +8,11 @@
 </body>
 
 <template name="heatmap">
-  <div name="heatmap" class="heatmap">
-    <canvas id="floorplan_overlay" width="{{ width }}" height="{{ height }}" ></canvas>
-    <svg style="position: absolute; top: 0; left: 0" class="sensor_overlay" width="{{ width }}" height="{{ height }}">
-    </svg>
-  </div>
+  <div id="heatmap" class="heatmap"></div>
 </template>
 
 <template name="sensor_list">
-  <div id="sensor_wrapper">
+  <div id="sensors">
     <ul class="sensor_list">
       {{#each sensors}}
         {{> sensor_item}}
