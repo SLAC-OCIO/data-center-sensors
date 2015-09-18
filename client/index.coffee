@@ -144,8 +144,11 @@ Sensors.find().observe
   added: (datum) ->
     i = normaliseId( datum._id )
     # console.log 'sensor added: %s -> %s: %o', datum._id, i, datum
-    data[i] = datum
-    redrawHeatMap metric
+    now = (new Date).getTime() / 1000
+    # don't add if too old (5mins?)
+    if now - data.ts < 300
+      data[i] = datum
+      redrawHeatMap metric
   changed: (datum) ->
     i = normaliseId( datum._id )
     # console.log 'sensor changed: %s -> %s', datum._id, i
