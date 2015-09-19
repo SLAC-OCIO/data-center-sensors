@@ -39,4 +39,8 @@ check
 =======
 yee379:livestamp
 autopublish
+<<<<<<< 1a65a69d23179109844dd9d1ff1ae6d292ea512a
 >>>>>>> removing previous files
+=======
+insecure
+>>>>>>> Added instructions for getting up and running
