@@ -1,3 +1,7 @@
+<<<<<<< e102248cc89b29885a14c95564abd6965a958292
 {
   "directory" : "public/components"
 }
+=======
+{"directory":"public/components/"}
+>>>>>>> Addng the forgotten bowerrc
