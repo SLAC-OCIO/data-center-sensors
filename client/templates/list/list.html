@@ -1,0 +1,13 @@
+<template name="list">
+    <div horizontal layout center-justified>
+        <paper-shadow z="1" class="card card-progress">
+          <div class="public-content">
+            {{> sensor_table }}
+          </div>
+        </paper-shadow>
+    </div>
+</template>
+
+    <template name="sensor_table">
+      {{> reactiveTable settings=settings}}
+    </template>
