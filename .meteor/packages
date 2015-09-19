@@ -11,3 +11,4 @@ nimble:restivus
 coffeescript
 yee379:livestamp
 aslagle:reactive-table
+iron:router

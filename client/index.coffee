@@ -133,7 +133,7 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
       .append('title')
         .text((d) -> d._id)
   
-Template.sensor_list.rendered = () ->
+Template.heatmap.rendered = () ->
   div = '.heatmap'
   drawFloorPlan  div, "images/2nd-floor-plan.svg"
   heatmap = createHeatMap div
