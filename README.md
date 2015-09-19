@@ -1,3 +1,4 @@
+<<<<<<< ee0fa5f094818520c272c9e588d4dfc8c5d5fe57
 # data-center-sensors
 
 This is a simple frontend providing heatmaps of our data center. It provides a simple REST API plus a reactive visualisation of the numerous sensors we have around our data center building.
@@ -24,3 +25,5 @@ Instructions:
 
 If you need to ssh into the vagrant box, you may do so via `vagrant ssh`; we do this in step 5.
 
+=======
+>>>>>>> removing previous files
