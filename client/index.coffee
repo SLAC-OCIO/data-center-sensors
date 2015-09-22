@@ -43,7 +43,7 @@ last_metric = null
 redrawHeatMap = ( metric ) ->
   if heatmap?
     if last_metric != metric
-      console.log 'redraw: %o', heatmap
+      # console.log 'redraw: %o', heatmap
       heatmap.configure
         gradient: profiles[metric].gradient 
         radius: profiles[metric].radius
@@ -80,7 +80,6 @@ updateLegend = (data) ->
     legendCtx.fillStyle = gradient
     legendCtx.fillRect(0, 0, 100, 10)
     $('gradient').src = legendCanvas.toDataURL()
-    console.log 'done'
 
 createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   console.log 'creating heatmap on %s', layer_name
@@ -129,7 +128,10 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
       .attr('r', radius )
       .attr('fill', 'blue')
       .attr('title', (d) -> d._id )
-      .attr('onclick', (d) -> "console.log('"+d._id+"')")
+      .on( 'click', (d,i) ->
+          # console.log "clicked on %o", d
+          window.open('/sensor/'+d._id+'/timechart')
+      )
       .append('title')
         .text((d) -> d._id)
   

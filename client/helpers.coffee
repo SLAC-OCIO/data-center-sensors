@@ -38,6 +38,17 @@ Template.sensor_item.helpers
     d.aisle
 
 
+Template.sensor_timechart.helpers
+  grafana_uri: () ->
+    "http://grafana.slac.stanford.edu:3000"
+  dashboard: () ->
+    "sensor"
+  panel_number: () ->
+    "1"
+  id: () ->
+    Router.current().params.id
+
+
 @normaliseId = (id) ->
   id.substring(8)
 
