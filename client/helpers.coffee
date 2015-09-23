@@ -19,7 +19,7 @@ Template.sensor_table.helpers
         { key: 'pressure', label: 'pressure (hPa)' },
         { key: 'lux', label: 'brightness (lux)' },
         { key: 'rssi', label: 'rssi (dBm)' },
-        { key: 'ts', label: 'updated', fn: (v,o) -> v }
+        { key: 'ts', label: 'updated', tmpl: Template.sensor_updated }
       ]
     }
     

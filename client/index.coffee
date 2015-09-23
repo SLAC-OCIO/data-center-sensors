@@ -9,10 +9,10 @@ profiles =
     radius: 13
     gradient: 
       0.0: 'gray'
-      0.2: 'cyan'
-      0.4: 'yellow'
-      0.6: 'orange'
-      0.8: 'red'
+      0.3: 'cyan'
+      0.5: 'yellow'
+      0.7: 'orange'
+      0.9: 'red'
   'pressure':
     max: 1500
     radius: 13
