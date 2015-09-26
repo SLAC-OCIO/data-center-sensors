@@ -40,7 +40,7 @@ Template.sensor_item.helpers
 
 Template.sensor_timechart.helpers
   grafana_uri: () ->
-    "http://grafana.slac.stanford.edu:3000"
+    "http://grafana.slac.stanford.edu"
   dashboard: () ->
     "sensor"
   panel_number: () ->
@@ -88,6 +88,7 @@ meta =
   "23158c6938a609ee":	[ "2ar08",	322,	291,	"2aq08",	"cold",	"right" ]																				
   "2317896938a609ee":	[ "2ag14",	391,	183,	"2ah14",	"hot",	"right" ]																				
   "231a7a7838a609ee":	[ "2ad27",	532,	150,	"2ae27",	"hot",	"left" ]																				
+  "231e196938a609ee":	[ "2al13",	385,	237,	"2am13",	"cold",	"middle" ]																				
   "231e2d6938a609ee":	[ "2al10",	344,	237,	"2am10",	"cold",	"left" ]																				
   "231f527838a609ee":	[ "2ai09",	332,	203,	"2ah09",	"cold",	"right" ]																				
   "2323296938a609ee":	[ "2bc03",	268,	406,	"2bd03",	"hot",	"left" ]																				
@@ -105,6 +106,7 @@ meta =
   "233c957838a609ee":	[ "2bc02",	257,	406,	"2bd02",	"hot",	"left" ]																				
   "233d167838a609ee":	[ "2be04",	279,	422,	"2bd04",	"cold",	"left" ]																				
   "2343a07838a609ee":	[ "2ar11",	355,	291,	"2aq11",	"cold",	"right" ]																				
+  "23441a6938a609ee":	[ "2bc07",	311,	406,	"2bd07",	"hot",	"left" ]																				
   "2344816938a609ee":	[ "2ap06",	299,	276,	"2aq06",	"hot",	"right" ]																				
   "23448c6938a609ee":	[ "2aj24",	499,	209,	"2ai24",	"cold",	"right" ]																				
   "2344ae7838a609ee":	[ "2aj26",	523,	209,	"2ai26",	"cold",	"right" ]																				
@@ -120,6 +122,7 @@ meta =
   "23536e6938a609ee":	[ "2ag08",	321,	183,	"2ah08",	"hot",	"right" ]																				
   "2354436938a609ee":	[ "2ai13",	380,	203,	"2ah13",	"cold",	"right" ]																				
   "2357b27838a609ee":	[ "2ap07",	310,	276,	"2aq07",	"hot",	"right" ]																				
+  "23593b6938a609ee":	[ "2an13",	385,	256,	"2am13",	"hot",	"middle" ]																				
   "2359817838a609ee":	[ "2be06",	300,	422,	"2bd06",	"cold",	"left" ]																				
   "235a4d7838a609ee":	[ "2ap11",	355,	276,	"2aq11",	"hot",	"right" ]																				
   "235a866938a609ee":	[ "2ag07",	310,	183,	"2ah07",	"hot",	"right" ]																				
@@ -128,6 +131,7 @@ meta =
   "235c537838a609ee":	[ "2ad28",	544,	150,	"2ae28",	"hot",	"left" ]																				
   "235c747838a609ee":	[ "2ap14",	390,	276,	"2aq14",	"hot",	"right" ]																				
   "235c757838a609ee":	[ "2ad32",	592,	150,	"2ae32",	"hot",	"left" ]																				
+  "235c947838a609ee":	[ "2bc08",	322,	406,	"2bd08",	"hot",	"left" ]																				
   "23605d7838a609ee":	[ "2af27",	532,	166,	"2ae27",	"cold",	"left" ]																				
   "2360656938a609ee":	[ "2ai14",	391,	203,	"2ah14",	"cold",	"right" ]																				
   "2360a97838a609ee":	[ "2bc04",	279,	406,	"2bd04",	"hot",	"left" ]																				
@@ -140,10 +144,11 @@ meta =
   "236e727838a609ee":	[ "2af28",	544,	166,	"2ae28",	"cold",	"left" ]																				
   "236f976938a609ee":	[ "2an10",	344,	256,	"2am10",	"hot",	"right" ]																				
   "2370857838a609ee":	[ "2al11",	355,	237,	"2am11",	"cold",	"left" ]																				
+  "23715c6938a609ee":	[ "2be07",	311,	422,	"2bd07",	"cold",	"left" ]																				
   "2371977838a609ee":	[ "2ad30",	568,	150,	"2ae30",	"hot",	"left" ]																				
   "23777c7838a609ee":	[ "2ag09",	332,	183,	"2ah09",	"hot",	"right" ]																				
   "2377a1068fb7bdee":	[ "2af30",	568,	166,	"2ae30",	"cold",	"right" ]																				
   "2378926938a609ee":	[ "2ar06",	299,	291,	"2aq06",	"cold",	"middle" ]																				
   "237b826938a609ee":	[ "2ad29",	556,	150,	"2ae29",	"hot",	"left" ]																				
-  "23867c7838a609ee":	[ "2ah26", 	523, 	192,	"2ai26",	"hot", 	"left" ]																				
+  "23867c7838a609ee":	[ "2ah26",	523,	192,	"2ai26",	"hot", 	"left" ]																				
   
