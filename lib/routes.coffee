@@ -16,7 +16,7 @@ Router.route "/about",
 Router.route "/map",
   controller: "PublicController"
 
-Router.route "/list",
+Router.route "/table",
   controller: "PublicController"
 
 Router.route "/sign-in",
