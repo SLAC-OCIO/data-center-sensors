@@ -18,3 +18,6 @@ Template.dashboardLayout.events
   "click [data-action=sign-out]": ->
     Meteor.logout ->
       Router.go "/"
+
+  "click _toggleTable": ->
+      $("[_toggleTable]")[0].hide_canvas()

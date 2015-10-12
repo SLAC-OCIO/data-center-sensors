@@ -10,7 +10,10 @@
       <paper-item class="home toolbar-item">
         <a href="/">Home</a>
       </paper-item>
-
+          <div center horizontal layout>
+              <div flex>Custom Colors</div>
+              <paper-toggle-button class="fun" toggles="true"><a href="{{_toggleTable}}}">Toggle Table</a></paper-toggle-button>
+          </div>
       </core-toolbar>
       <div layout vertical fit>
         <core-menu class="nav">
@@ -22,10 +25,10 @@
                 Sensors Map
               </paper-item>
             </a>
-            <a href="{{pathFor route='list'}}">
+            <a href="{{pathFor route='table'}}">
               <paper-item data-action="switch-project">
                 <core-icon icon="chevron-right"></core-icon>
-                Sensor List
+                Table
               </paper-item>
             </a>
           </core-submenu>

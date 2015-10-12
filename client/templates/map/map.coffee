@@ -1,8 +1,10 @@
+
+# setup some initial variables
 heatmap = null
 data = {}
 metric = 'temp'
 
-
+#construct the profile for heatmap
 profiles =
   'temp':
     max: 50
@@ -21,7 +23,7 @@ profiles =
       0.5: 'cyan'
       0.8: 'yellow'
       0.6: 'orange'
-
+#create the floorplan overlay
 drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
   d3.select( layer_name ).append( 'canvas' )
   .style('top', 0)
@@ -40,6 +42,8 @@ drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='flo
     ctx.globalAlpha = 1.0
 
 last_metric = null
+#inject parameters for heatmap
+#redraw heatmap
 redrawHeatMap = ( metric ) ->
   if heatmap?
     if last_metric != metric
@@ -52,7 +56,7 @@ redrawHeatMap = ( metric ) ->
       min: 0
       data: regenData metric
     last_metric = metric
-
+#parse data that is fed to map
 regenData = ( metric ) ->
   tuples = []
   for id in getSensorIds()
@@ -62,12 +66,14 @@ regenData = ( metric ) ->
   tuples
 
 
-
+#for the table view
 legendCanvas = document.createElement('canvas');
 legendCanvas.width = 100
 legendCanvas.height = 10
 legendCtx = legendCanvas.getContext('2d')
 gradientCfg = {}
+
+
 updateLegend = (data) ->
   $('min').text = data.min
   $('max').text = data.max
@@ -81,7 +87,7 @@ updateLegend = (data) ->
     legendCtx.fillRect(0, 0, 100, 10)
     $('gradient').src = legendCanvas.toDataURL()
     console.log 'done'
-
+#combines heatmap
 createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   console.log 'creating heatmap on %s', layer_name
   # create legend
@@ -100,6 +106,7 @@ createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   .attr('id','gradient')
   .attr('src', '')
 
+#invoke heatmap.js
   h337.create
     container: document.querySelector layer_name
     radius: profiles[metric].radius
@@ -109,6 +116,7 @@ createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
     onExtremaChange: (d) ->
       updateLegend(d)
 
+#create a sensor overlay
 drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sensor_overlay' ) ->
   svg = d3.select( layer_name ).append('svg')
   .style('position', 'absolute')
@@ -133,6 +141,7 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
   .append('title')
   .text((d) -> d._id)
 
+#meteor template for the floorplan
 Template.heatmap.rendered = () ->
   div = '.heatmap'
   drawFloorPlan  div, "img/2nd-floor-plan.svg"
@@ -140,6 +149,7 @@ Template.heatmap.rendered = () ->
   redrawHeatMap metric
   drawSensorLocations div
 
+#get the data from the database
 Sensors.find().observe
   added: (datum) ->
     i = normaliseId( datum._id )
@@ -155,5 +165,3 @@ Sensors.find().observe
     # console.log 'sensor changed: %s -> %s', datum._id, i
     data[i] = datum
     redrawHeatMap metric
-
-
