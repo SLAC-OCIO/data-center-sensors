@@ -1,8 +1,8 @@
 Template.heatmap.helpers
   width:
-    '1000px'
+    '100%'
   height:
-    '800px'
+    '100%'
 
 Template.sensor_table.helpers
   settings: () ->

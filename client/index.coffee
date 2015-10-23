@@ -1,9 +1,11 @@
 heatmap = null
 data = {}
 metric = 'temp'
+Meteor.startup ->
+  newW = {}  if typeof newW is "undefined"
+  newH = {}  if typeof newH is "undefined"
 
-
-profiles = 
+profiles =
   'temp':
     max: 50
     radius: 13
@@ -22,13 +24,16 @@ profiles =
       0.8: 'yellow'
       0.6: 'orange'
 
-drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
+#draw the floorplan svg
+#initially - static, needs no redraw.
+#----------------------
+drawFloorPlan = ( layer_name, src, newW, newH, alpha=0.3, klass='floorplan_overlay' ) ->
   d3.select( layer_name ).append( 'canvas' )
     .style('top', 0)
     .style('left', 0)
     .attr( 'class', klass )
-    .attr( 'width', width )
-    .attr( 'height', height )
+    .attr( 'width', newW )
+    .attr( 'height', newH )
   plan = new Image()
   plan.src = src
   plan.onload = () -> 
@@ -36,10 +41,11 @@ drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='flo
     canvas = $('.'+klass)
     ctx = canvas[0].getContext( '2d' )
     ctx.globalAlpha = alpha
-    ctx.drawImage plan, 50, 0, width, width * plan.height / plan.width
+    ctx.drawImage plan, 50, 0, newW, newW * plan.height / plan.width
     ctx.globalAlpha = 1.0
-
+    console.log(newW, newH)
 last_metric = null
+
 redrawHeatMap = ( metric ) ->
   if heatmap?
     if last_metric != metric
@@ -61,8 +67,6 @@ regenData = ( metric ) ->
     tuples.push t
   tuples
 
-
-
 legendCanvas = document.createElement('canvas');
 legendCanvas.width = 100
 legendCanvas.height = 10
@@ -81,6 +85,8 @@ updateLegend = (data) ->
     legendCtx.fillRect(0, 0, 100, 10)
     $('gradient').src = legendCanvas.toDataURL()
 
+#create the blue dots
+#-------------------
 createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   console.log 'creating heatmap on %s', layer_name
   # create legend
@@ -108,6 +114,8 @@ createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
     onExtremaChange: (d) ->
       updateLegend(d)
 
+#Draw sensors locations on map
+#-----------------------
 drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sensor_overlay' ) ->
   svg = d3.select( layer_name ).append('svg')
     .style('position', 'absolute')
@@ -134,14 +142,32 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
       )
       .append('title')
         .text((d) -> d._id)
-  
+
+resizeInit = () ->
+  window.addEventListener "resize", ->
+    Session.set "resize", new Date()
+
+Template.heatmap.onCreated = () ->
+  resizeInit
+  @heatSize = new ReactiveDict()
+  @heatSize.set "height", window.innerHeight
+  @heatSize.set "width", window.innerWindow
+  #console.log(newW, newH)
+
+
+#Do these things after template rendered
 Template.heatmap.rendered = () ->
   div = '.heatmap'
+
   drawFloorPlan  div, "images/2nd-floor-plan.svg"
   heatmap = createHeatMap div
   redrawHeatMap metric
   drawSensorLocations div
-  
+
+#Sensors observer
+#reactive? Checks for updated sensors.
+#redraws heatmap
+
 Sensors.find().observe
   added: (datum) ->
     i = normaliseId( datum._id )
@@ -157,5 +183,3 @@ Sensors.find().observe
     # console.log 'sensor changed: %s -> %s', datum._id, i
     data[i] = datum
     redrawHeatMap metric
-
-
