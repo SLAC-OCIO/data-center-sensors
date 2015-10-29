@@ -1,24 +1,16 @@
 <template name="dashboardLayout">
   {{#globalLayout}}
 
-  <core-drawer-panel data-drawer-panel>
+  <core-drawer-panel data-drawer-panel forceNarrow>
 
     <!-- Drawer -->
-    <core-header-panel mode="waterfall" drawer>
-      <core-toolbar class="toolbar toolbar-dark">
-
-      <paper-item class="home toolbar-item">
-        <a href="/">Home</a>
-      </paper-item>
-          <div center horizontal layout>
-              <div flex>Custom Colors</div>
-              <paper-toggle-button class="fun" toggles="true"><a href="{{_toggleTable}}}">Toggle Table</a></paper-toggle-button>
-          </div>
+    <core-header-panel mode="waterfall" drawer >
+      <core-toolbar class="toolbar">
+          <paper-icon-button class="narrow" icon="menu" data-action="toggle-drawer" style="color:white;">
+          </paper-icon-button>
       </core-toolbar>
       <div layout vertical fit>
-        <core-menu class="nav">
-
-          <core-submenu label="Projects" icon="apps" active>
+        <core-menu class="nav" >
             <a href="{{pathFor route='map'}}">
               <paper-item data-action="switch-project">
                 <core-icon icon="chevron-right"></core-icon>
@@ -31,8 +23,6 @@
                 Table
               </paper-item>
             </a>
-          </core-submenu>
-
           <a href="#">
             <paper-item>
               <core-icon icon="settings"></core-icon>
@@ -43,26 +33,31 @@
           <a href="/sign-out">
             <paper-item data-action="sign-out">
               <core-icon icon="exit-to-app"></core-icon>
-              Sign out
+              Ignore me for now
             </paper-item>
-          </a>
-
+          </a> ->
         </core-menu>
 
         <div flex></div>
 
         <core-menu class="">
-          <paper-item label="{{currentEmail}}" class="list-item current-user">
-          </paper-item>
+          <!--<paper-item label="{{currentEmail}}" class="list-item current-user">
+          </paper-item> -->
         </core-menu>
       </div>
     </core-header-panel>
 
     <!-- Main Content -->
-    <core-header-panel mode="waterfall" main>
-      <core-toolbar class="toolbar toolbar-primary">
-        <paper-icon-button class="hidden-md narrow" icon="menu" data-action="toggle-drawer">
+    <core-header-panel mode="waterfall" main narrow>
+      <core-toolbar class="toolbar toolbar-primary ">
+        <paper-icon-button class="narrow" icon="menu" data-action="toggle-drawer">
         </paper-icon-button>
+          <paper-input class="short" label="icons and buttons" id="inputWithButton">
+              <paper-icon icon="search" prefix></paper-icon>
+              <paper-icon-button suffix onclick="clearInput()"
+                                 icon="clear" alt="clear" title="clear" tabindex="0">
+              </paper-icon-button>
+          </paper-input>
         {{> yield "contentToolbar"}}
       </core-toolbar>
 
