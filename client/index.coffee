@@ -143,26 +143,29 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
       .append('title')
         .text((d) -> d._id)
 
-resizeInit = () ->
-  window.addEventListener "resize", ->
-    Session.set "resize", new Date()
-
 Template.heatmap.onCreated = () ->
   resizeInit
   @heatSize = new ReactiveDict()
   @heatSize.set "height", window.innerHeight
   @heatSize.set "width", window.innerWindow
-  #console.log(newW, newH)
 
+resizeInit = () ->
+  window.addEventListener "resize", ->
+    Session.set "resize", new Date()
 
 #Do these things after template rendered
 Template.heatmap.rendered = () ->
   div = '.heatmap'
-
-  drawFloorPlan  div, "images/2nd-floor-plan.svg"
-  heatmap = createHeatMap div
-  redrawHeatMap metric
-  drawSensorLocations div
+  geom = ->
+    tempVar = Session.get("resize")
+    if Date.now() > tempVar
+      newW: heatSize.width
+      newH: heatSize.height
+    else
+      newW = "1000px"
+      newH = "800px"
+    newW
+    newH
 
 #Sensors observer
 #reactive? Checks for updated sensors.
