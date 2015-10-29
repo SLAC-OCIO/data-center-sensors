@@ -1,13 +1,7 @@
 <template name="table">
-    <div horizontal layout center-justified>
-        <paper-shadow z="1" class="card card-progress">
-          <div class="public-content">
-            {{> sensor_table }}
-          </div>
-        </paper-shadow>
-    </div>
+    {{> reactiveTable settings=settings}}
 </template>
 
-    <template name="sensor_table">
-      {{> reactiveTable settings=settings}}
-    </template>
+<template name="sensor_updated">
+    {{ livestamp ts }}
+</template>

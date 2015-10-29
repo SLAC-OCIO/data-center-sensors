@@ -9,15 +9,23 @@ Router.configure
 @PublicController = RouteController.extend
   layoutTemplate: "publicLayout"
   loadingTemplate: "loading"
+Router.route "/",
+  controller: "PublicController"
+  name: "home2"
+  action: ->
+    @layout "dashboardLayout"
+    @render "map"
 
 Router.route "/about",
   controller: "PublicController"
 
-Router.route "/map",
-  controller: "PublicController"
+#Router.route "/map",
+#  controller: "PublicController"
 
 Router.route "/table",
   controller: "PublicController"
+
+###
 
 Router.route "/sign-in",
   name: "accounts.signIn"
@@ -55,5 +63,9 @@ Router.route "/",
       @layout "dashboardLayout"
       @render "onboarding"
     else
-      @layout "publicLayout"
-      @render "home"
+    @layout "publicLayout"
+    @render "home"
+###
+
+Router.route '/sensor/:id/timechart', () ->
+  @render('sensor_timechart')

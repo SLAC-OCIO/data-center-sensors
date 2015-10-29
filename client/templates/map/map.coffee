@@ -1,20 +1,16 @@
-
-# setup some initial variables
 heatmap = null
 data = {}
 metric = 'temp'
-
-#construct the profile for heatmap
 profiles =
   'temp':
     max: 50
     radius: 13
     gradient:
       0.0: 'gray'
-      0.2: 'cyan'
-      0.4: 'yellow'
-      0.6: 'orange'
-      0.8: 'red'
+      0.3: 'cyan'
+      0.5: 'yellow'
+      0.7: 'orange'
+      0.9: 'red'
   'pressure':
     max: 1500
     radius: 13
@@ -23,14 +19,17 @@ profiles =
       0.5: 'cyan'
       0.8: 'yellow'
       0.6: 'orange'
-#create the floorplan overlay
-drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
+
+#draw the floorplan svg
+#initially - static, needs no redraw.
+#----------------------
+drawFloorPlan = ( layer_name, src, newW, newH, alpha=0.3, klass='floorplan_overlay' ) ->
   d3.select( layer_name ).append( 'canvas' )
   .style('top', 0)
   .style('left', 0)
   .attr( 'class', klass )
-  .attr( 'width', width )
-  .attr( 'height', height )
+  .attr( 'width', newW )
+  .attr( 'height', newH )
   plan = new Image()
   plan.src = src
   plan.onload = () ->
@@ -38,16 +37,15 @@ drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='flo
     canvas = $('.'+klass)
     ctx = canvas[0].getContext( '2d' )
     ctx.globalAlpha = alpha
-    ctx.drawImage plan, 50, 0, width, width * plan.height / plan.width
+    ctx.drawImage plan, 50, 0, newW, newW * plan.height / plan.width
     ctx.globalAlpha = 1.0
-
+    console.log(newW, newH)
 last_metric = null
-#inject parameters for heatmap
-#redraw heatmap
+
 redrawHeatMap = ( metric ) ->
   if heatmap?
     if last_metric != metric
-      console.log 'redraw: %o', heatmap
+# console.log 'redraw: %o', heatmap
       heatmap.configure
         gradient: profiles[metric].gradient
         radius: profiles[metric].radius
@@ -56,7 +54,7 @@ redrawHeatMap = ( metric ) ->
       min: 0
       data: regenData metric
     last_metric = metric
-#parse data that is fed to map
+
 regenData = ( metric ) ->
   tuples = []
   for id in getSensorIds()
@@ -65,15 +63,11 @@ regenData = ( metric ) ->
     tuples.push t
   tuples
 
-
-#for the table view
 legendCanvas = document.createElement('canvas');
 legendCanvas.width = 100
 legendCanvas.height = 10
 legendCtx = legendCanvas.getContext('2d')
 gradientCfg = {}
-
-
 updateLegend = (data) ->
   $('min').text = data.min
   $('max').text = data.max
@@ -86,8 +80,9 @@ updateLegend = (data) ->
     legendCtx.fillStyle = gradient
     legendCtx.fillRect(0, 0, 100, 10)
     $('gradient').src = legendCanvas.toDataURL()
-    console.log 'done'
-#combines heatmap
+
+#create the blue dots
+#-------------------
 createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   console.log 'creating heatmap on %s', layer_name
   # create legend
@@ -106,7 +101,6 @@ createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
   .attr('id','gradient')
   .attr('src', '')
 
-#invoke heatmap.js
   h337.create
     container: document.querySelector layer_name
     radius: profiles[metric].radius
@@ -116,7 +110,8 @@ createHeatMap = ( layer_name, opacity=[ 0.6, 1.0 ], blur=0.5 ) ->
     onExtremaChange: (d) ->
       updateLegend(d)
 
-#create a sensor overlay
+#Draw sensors locations on map
+#-----------------------
 drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sensor_overlay' ) ->
   svg = d3.select( layer_name ).append('svg')
   .style('position', 'absolute')
@@ -137,19 +132,47 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
   .attr('r', radius )
   .attr('fill', 'blue')
   .attr('title', (d) -> d._id )
-  .attr('onclick', (d) -> "console.log('"+d._id+"')")
+  .on( 'click', (d,i) ->
+# console.log "clicked on %o", d
+    window.open('/sensor/'+d._id+'/timechart')
+  )
   .append('title')
   .text((d) -> d._id)
 
-#meteor template for the floorplan
+
+Template.heatmap.onCreated = () ->
+  resizeInit
+  @heatSize = new ReactiveDict()
+  @heatSize.set "height", window.innerHeight
+  @heatSize.set "width", window.innerWindow
+
+resizeInit = () ->
+  window.addEventListener "resize", ->
+    Session.set "resize", new Date()
+
+#Do these things after template rendered
 Template.heatmap.rendered = () ->
   div = '.heatmap'
+  geom = ->
+    tempVar = Session.get("resize")
+    if Date.now() > tempVar
+      newW: heatSize.width
+      newH: heatSize.height
+    else
+      newW = "1000px"
+      newH = "800px"
+    newW
+    newH
+
   drawFloorPlan  div, "img/2nd-floor-plan.svg"
   heatmap = createHeatMap div
   redrawHeatMap metric
   drawSensorLocations div
 
-#get the data from the database
+#Sensors observer
+#reactive? Checks for updated sensors.
+#redraws heatmap
+
 Sensors.find().observe
   added: (datum) ->
     i = normaliseId( datum._id )
@@ -165,3 +188,6 @@ Sensors.find().observe
     # console.log 'sensor changed: %s -> %s', datum._id, i
     data[i] = datum
     redrawHeatMap metric
+
+
+

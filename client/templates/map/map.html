@@ -1,21 +1,22 @@
-<template name="map" class="public-content">
-  <div vertical layout center>
-
-        {{> heatmap}}
-        {{> sensor_list}}
-
-  </div>
+<template name="map">
+    <div class="public-content">
+        <div vertical layout center>
+            {{> heatmap}}
+        </div>
+    </div>
 </template>
+
 <template name="heatmap">
-    <div id="heatmap" class="heatmap"></div>
+    <div id="heatmap" class="heatmap">
+    </div>
 </template>
 
 <template name="sensor_list">
     <div id="sensors">
         <ul class="sensor_list">
-          {{#each sensors}}
-            {{> sensor_item}}
-          {{/each}}
+            {{#each sensors}}
+                {{> sensor_item}}
+            {{/each}}
         </ul>
     </div>
 </template>
@@ -33,4 +34,8 @@
 </template>
 
 
-
+<template name="sensor_timechart">
+    <div id="timechart">
+        <iframe src="{{ grafana_uri }}/dashboard-solo/db/{{ dashboard }}?panelId={{ panel_number }}&fullscreen&var-sensor={{ id }}" width="450" height="200" frameborder="0"></iframe>
+    </div>
+</template>

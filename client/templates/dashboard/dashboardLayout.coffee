@@ -1,7 +1,7 @@
 Template.dashboardLayout.helpers
-  currentEmail: ->
+  ###currentEmail: ->
     Meteor.user()?.emails[0].address
-
+###
   narrow: ->
     Session.get "drawer-panel-narrow"
 
