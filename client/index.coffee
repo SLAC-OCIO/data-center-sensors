@@ -5,6 +5,7 @@ Meteor.startup ->
   newW = {}  if typeof newW is "undefined"
   newH = {}  if typeof newH is "undefined"
 
+
 profiles =
   'temp':
     max: 50
@@ -145,20 +146,20 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
 
 resizeInit = () ->
   window.addEventListener "resize", ->
-    Session.set "resize", new Date()
+    console.log(window.innerWidth)
 
 Template.heatmap.onCreated = () ->
-  resizeInit
   @heatSize = new ReactiveDict()
   @heatSize.set "height", window.innerHeight
   @heatSize.set "width", window.innerWindow
   #console.log(newW, newH)
+  newW: heatSize.get 'width'
+  newH: heatSize.get 'height'
 
 
 #Do these things after template rendered
 Template.heatmap.rendered = () ->
   div = '.heatmap'
-
   drawFloorPlan  div, "images/2nd-floor-plan.svg"
   heatmap = createHeatMap div
   redrawHeatMap metric
