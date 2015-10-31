@@ -1,0 +1,54 @@
+<template name="Layout">
+        {{> dashboard}}
+</template>
+
+<template name="dashboard">
+    {{#PaperDrawerPanel}}
+        {{#PaperDrawerPanelMain}}
+            {{#PaperHeaderPanel mode="standard" className="paper-header-panel-1 blue"}}
+                {{#PaperToolbar className="paper-toolbar-0"}}
+                    {{#PaperToolbarTop}}
+                        {{>PaperIconButton icon="navigation:menu" className="paper-drawer-toggle"}}
+
+                    {{/PaperToolbarTop}}
+                {{/PaperToolbar}}
+                {{#PaperHeaderPanelMain}}
+                    <div class="content">
+                        {{>yield}}
+                    </div>
+                {{/PaperHeaderPanelMain}}
+            {{/PaperHeaderPanel}}
+
+        {{/PaperDrawerPanelMain}}
+        {{#PaperDrawerPanelDrawer mode="toggle"}}
+
+            {{#PaperToolbar className="paper-toolbar-0"}}
+                {{#PaperToolbarTop}}
+                    {{>IronIcon icon="action:list"}}<span class="title">Catalog</span>
+                {{/PaperToolbarTop}}
+
+            {{/PaperToolbar}}
+
+            {{#PaperMenu defaultSelected="0" className="no-shadow"}}
+
+                {{#PaperItem className="paper-item-0"}}
+                    <a href="/">
+                        {{>IronIcon icon="action:list"}}Overview
+                    </a>
+                {{/PaperItem}}
+                {{#PaperItem className="paper-item-0"}}
+                    <a href="/heatmap">
+                        {{>IronIcon icon="image:crop-7_5"}}Heatmap
+                    </a>
+                {{/PaperItem}}
+                {{#PaperItem className="paper-item-0"}}
+                    <a href="/list">
+                        {{>IronIcon icon="image:crop-7_5"}}List
+                    </a>
+                {{/PaperItem}}
+
+            {{/PaperMenu}}
+        {{/PaperDrawerPanelDrawer}}
+    {{/PaperDrawerPanel}}
+
+</template>

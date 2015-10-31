@@ -6,11 +6,8 @@
 
 autopublish
 insecure
-nimble:restivus
-coffeescript
-yee379:livestamp
-aslagle:reactive-table
-iron:router
+codefights:blaze-material-ui
+templating
 standard-minifiers
 meteor-base
 mobile-experience
@@ -25,3 +22,11 @@ random
 ejson
 spacebars
 check
+fourseven:scss@3.3.3_3
+iron:router
+aslagle:reactive-table
+coffeescript
+yee379:livestamp
+reactive-var
+reactive-dict
+nimble:restivus
