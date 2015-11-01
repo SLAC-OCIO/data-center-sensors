@@ -3,12 +3,15 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+<<<<<<< 74d0e38e7e0d9783eeb7722304fa7a1ac66e1124
 <<<<<<< ee0fa5f094818520c272c9e588d4dfc8c5d5fe57
 autopublish
 insecure
 nimble:restivus
 =======
 meteor-platform
+=======
+>>>>>>> tried updating vulcanize - still errors
 less
 accounts-password
 iron:router
@@ -43,4 +46,21 @@ autopublish
 >>>>>>> removing previous files
 =======
 insecure
+<<<<<<< 74d0e38e7e0d9783eeb7722304fa7a1ac66e1124
 >>>>>>> Added instructions for getting up and running
+=======
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+>>>>>>> tried updating vulcanize - still errors
