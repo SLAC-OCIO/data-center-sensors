@@ -1,0 +1,7 @@
+{
+    "polyfill": "/components/webcomponentsjs/webcomponents.min.js",
+    "useShadowDom": true, // optional, defaults to shady dom (polymer default)
+    "imports": [
+
+    ]
+}
