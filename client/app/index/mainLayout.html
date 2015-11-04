@@ -1,0 +1,56 @@
+<template name="mainLayout">
+    <paper-header-panel id="topPanel" class="fit">
+        <paper-toolbar id="topToolbar">
+            <paper-icon-button icon="menu" on-tap="menuAction">
+            </paper-icon-button>
+            <div id="search" show?="{{showingSearch}}" on-click="{{toggleSearch}}">
+                <paper-icon-button id="button" icon="search"></paper-icon-button>
+                <input type="search" id="input" on-keyup="{{onKeyPress}}" autocomplete="off">
+            </div>
+        </paper-toolbar>
+        <paper-drawer-panel id="paperDrawerPanel" force-Narrow>
+            <div drawer class="shadow-elevation-8dp">
+
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <span class="title">Menu</span>
+                </paper-toolbar>
+
+                <!-- Drawer Content -->
+                <paper-menu class="list">
+                    <a href="/" class="{{isActivePath '/'}}">
+                        <paper-icon-item>
+                            <iron-icon icon="home" item-icon ></iron-icon>
+                            Home
+                        </paper-icon-item>
+                    </a>
+                    <a href="/heatmap" class="{{isActivePath '/heatmap'}}">
+                        <paper-icon-item>
+                            <iron-icon icon="language" item-icon></iron-icon>
+                            Map
+                        </paper-icon-item>
+                    </a>
+                    <a href="/table" class="{{isActivePath '/table'}}">
+                        <paper-icon-item>
+                            <iron-icon icon="language" item-icon></iron-icon>
+                            Table
+                        </paper-icon-item>
+                    </a>
+                </paper-menu>
+            </div>
+            <div main>
+                {{>Template.dynamic template=content}}
+            </div>
+        </paper-drawer-panel>
+    </paper-header-panel>
+
+	<paper-toast id="main-toast" duration="6000">
+		{{>Template.dynamic template=toastTemplate data=toastData}}
+	</paper-toast>
+	<paper-dialog
+		id="global-dialog"
+		opened="{{queryParam 'dialog'}}"
+		with-backdrop>
+		{{>Template.dynamic template=timechart_dialog}}
+	</paper-dialog>
+</template>
