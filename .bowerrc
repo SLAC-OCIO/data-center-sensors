@@ -1,3 +1,4 @@
+<<<<<<< 649db2c96c862913179b8acb7aff25b3e5f72992
 <<<<<<< e102248cc89b29885a14c95564abd6965a958292
 {
   "directory" : "public/components"
@@ -5,3 +6,8 @@
 =======
 {"directory":"public/components/"}
 >>>>>>> Addng the forgotten bowerrc
+=======
+{
+	"directory": "public/bower_components"
+}
+>>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently

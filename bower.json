@@ -1,23 +1,15 @@
 {
-  "name": "data-center-sensors",
-  "homepage": "https://github.com/SLACNationalAcceleratorLaboratory/data-center-sensors",
-  "authors": [
-    "Vincent Flesouras <x.algorithm@gmail.com>"
-  ],
-  "description": "",
-  "main": "",
-  "moduleType": [
-    "globals",
-    "node"
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "public/components/",
-    "test",
-    "tests"
-  ]
+	"name": "gear-and-equipment-database",
+	"private": true,
+	"dependencies": {
+		"webcomponentsjs": "^0.7.2",
+		"polymer": "Polymer/polymer#^1.0.0",
+		"iron-elements": "PolymerElements/iron-elements#^1.0.0",
+		"paper-elements": "PolymerElements/paper-elements#^1.0.0",
+		"neon-elements": "PolymerElements/neon-elements#^1.0.0"
+	},
+	"devDependencies": {
+		"web-component-tester": "*",
+		"test-fixture": "PolymerElements/test-fixture#^1.0.0"
+	}
 }
