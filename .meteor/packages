@@ -4,65 +4,21 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-<<<<<<< 649db2c96c862913179b8acb7aff25b3e5f72992
-<<<<<<< 74d0e38e7e0d9783eeb7722304fa7a1ac66e1124
-<<<<<<< ee0fa5f094818520c272c9e588d4dfc8c5d5fe57
+
 autopublish
 insecure
 nimble:restivus
-=======
 meteor-platform
-=======
->>>>>>> tried updating vulcanize - still errors
-less
 accounts-password
-iron:router
->>>>>>> removing previous files
-coffeescript
 meteorhacks:inject-initial
 differential:vulcanize
-
-reactive-var
-nimble:restivus
 aslagle:reactive-table
-<<<<<<< ee0fa5f094818520c272c9e588d4dfc8c5d5fe57
-iron:router
-standard-minifiers
-meteor-base
 mobile-experience
 mongo
-blaze-html-templates
-session
-jquery
-tracker
-logging
-reload
-random
-ejson
-spacebars
-check
-=======
-yee379:livestamp
-=======
->>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently
-autopublish
-<<<<<<< 1a65a69d23179109844dd9d1ff1ae6d292ea512a
->>>>>>> removing previous files
-=======
-insecure
-<<<<<<< 649db2c96c862913179b8acb7aff25b3e5f72992
-<<<<<<< 74d0e38e7e0d9783eeb7722304fa7a1ac66e1124
->>>>>>> Added instructions for getting up and running
-=======
-=======
 reactive-var
 kadira:blaze-layout
-#sanjo:jasmine
->>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently
 standard-minifiers
 meteor-base
-mobile-experience
-mongo
 blaze-html-templates
 session
 jquery
@@ -73,20 +29,12 @@ random
 ejson
 spacebars
 check
-<<<<<<< 649db2c96c862913179b8acb7aff25b3e5f72992
->>>>>>> tried updating vulcanize - still errors
-=======
-aslagle:reactive-table
 yee379:livestamp
-nimble:restivus
 kadira:flow-router
 arillo:flow-router-helpers
 coffeescript
 reactive-dict
-<<<<<<< 60584a3fb660152e602ae3129bf12c3e2fab3ba1
->>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently
-=======
 less
 twbs:bootstrap
 stef:meteor-bootstrap-drawer
->>>>>>> Ripped out polymer, added bootstrap. Better layout, nicer menu
+
