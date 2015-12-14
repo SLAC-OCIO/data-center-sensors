@@ -113,6 +113,7 @@ drawSensorLocations = ( layer_name, radius=3, width=newW, height=newH, klass='se
   .text((d) -> d._id)
 <<<<<<< 649db2c96c862913179b8acb7aff25b3e5f72992:client/templates/map/map.coffee
 
+<<<<<<< 60584a3fb660152e602ae3129bf12c3e2fab3ba1
 
 Template.heatmap.onCreated = () ->
   resizeInit
@@ -164,3 +165,10 @@ Sensors.find().observe
     redrawHeatMap metric
 =======
 >>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently:client/app/map/map.coffee
+=======
+combineCanvas = () ->
+  canh = document.getElementById('heatmap')
+  ctx3 = canh.getContext('2d')
+  canm = document.getElementById('heatmap')
+  ctx3.drawImage()
+>>>>>>> Ripped out polymer, added bootstrap. Better layout, nicer menu

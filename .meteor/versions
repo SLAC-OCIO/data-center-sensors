@@ -121,7 +121,6 @@ ddp-rate-limiter@1.0.0
 ddp-server@1.2.1
 deps@1.0.9
 diff-sequence@1.0.1
-differential:vulcanize@2.0.1
 ecmascript@0.1.5
 ecmascript-collections@0.1.6
 ejson@1.0.7
@@ -137,6 +136,7 @@ jquery@1.11.4
 kadira:blaze-layout@2.2.0
 kadira:flow-router@2.8.0
 launch-screen@1.0.4
+less@2.5.0_3
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
@@ -180,9 +180,11 @@ webapp-hashing@1.0.3
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 standard-minifiers@1.0.1
+stef:meteor-bootstrap-drawer@1.0.1
 templating@1.1.4
 templating-tools@1.0.0
 tracker@1.0.9
+twbs:bootstrap@3.3.6
 ui@1.0.8
 underscore@1.0.4
 url@1.0.5

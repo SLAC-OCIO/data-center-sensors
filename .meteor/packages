@@ -56,7 +56,6 @@ insecure
 =======
 =======
 reactive-var
-differential:vulcanize
 kadira:blaze-layout
 #sanjo:jasmine
 >>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently
@@ -84,4 +83,10 @@ kadira:flow-router
 arillo:flow-router-helpers
 coffeescript
 reactive-dict
+<<<<<<< 60584a3fb660152e602ae3129bf12c3e2fab3ba1
 >>>>>>> There is an interface, there is a full screen map - but only on chrome. Cr, FF, Sa all act differently
+=======
+less
+twbs:bootstrap
+stef:meteor-bootstrap-drawer
+>>>>>>> Ripped out polymer, added bootstrap. Better layout, nicer menu

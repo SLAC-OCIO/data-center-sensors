@@ -1,55 +1,43 @@
 <template name="heatmap">
     <div id="heatmap" class="heatmap">
-        <paper-header-panel id="topPanel" class="fit">
-            <paper-toolbar id="topToolbar">
-                <paper-icon-button icon="menu" on-tap="menuAction">
-                </paper-icon-button>
-                <div id="search" show?="{{showingSearch}}" on-click="{{toggleSearch}}">
-                    <paper-icon-button id="button" icon="search"></paper-icon-button>
-                    <input type="search" id="input" on-keyup="{{onKeyPress}}" autocomplete="off">
+        <div id="drawerExample" class="drawer dw-xs-10 dw-sm-6 dw-md-4 fold" aria-labelledby="drawerExample">
+            <div class="drawer-controls">
+                <a href="#drawerExample" data-toggle="drawer"  aria-foldedopen="false" aria-controls="drawerExample" class="btn btn-primary btn-sm">Menu</a>
+            </div>
+            <div class="drawer-contents">
+                <div class="drawer-heading">
+                    <h2 class="drawer-title">Menu</h2>
                 </div>
-            </paper-toolbar>
-            <paper-drawer-panel id="paperDrawerPanel" force-Narrow>
-                <div drawer class="shadow-elevation-8dp">
-
-                    <!-- Drawer Toolbar -->
-                    <paper-toolbar id="drawerToolbar">
-                        <span class="title">Menu</span>
-                    </paper-toolbar>
-
-                    <!-- Drawer Content -->
-                    <paper-menu class="list">
-                        <a href="/" class="{{isActivePath '/'}}">
-                            <paper-icon-item>
-                                <iron-icon icon="home" item-icon ></iron-icon>
-                                Home
-                            </paper-icon-item>
-                        </a>
-                        <a href="/heatmap" class="{{isActivePath '/heatmap'}}">
-                            <paper-icon-item>
-                                <iron-icon icon="language" item-icon></iron-icon>
-                                Map
-                            </paper-icon-item>
-                        </a>
-                        <a href="/table" class="{{isActivePath '/table'}}">
-                            <paper-icon-item>
-                                <iron-icon icon="language" item-icon></iron-icon>
-                                Table
-                            </paper-icon-item>
-                        </a>
-                    </paper-menu>
+                <div class="drawer-body">
+                    <a href="/">home</a>
                 </div>
-            </paper-drawer-panel>
-        </paper-header-panel>
+                <ul class="drawer-nav">
+                    <li role="presentation" class="active"><a href="/heatmap">Map</a></li>
+                    <li role="presentation"><a href="/table">Table</a></li>
+                    <li role="presentation"><a href="#">login - not implmented yet</a></li>
+                </ul>
+                <div class="drawer-footer">
+                    <small>&copy; Caroline Amaba</small>
+                </div>
+            </div>
+        </div>
+        <div class="navbar" id="topPanel">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
 
-        <paper-toast id="main-toast" duration="6000">
-            {{>Template.dynamic template=toastTemplate data=toastData}}
-        </paper-toast>
-        <paper-dialog
-                id="global-dialog"
-                opened="{{queryParam 'dialog'}}"
-                with-backdrop>
-            {{>Template.dynamic template=timechart_dialog}}
-        </paper-dialog>
+                    </div>
+                    <form class="navbar-left" role="search">
+
+                    </form>
+                    <ul class="nav navbar-nav navbar-right navbar-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </div>
 </template>
