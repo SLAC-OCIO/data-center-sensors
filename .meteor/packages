@@ -8,10 +8,7 @@
 autopublish
 insecure
 nimble:restivus
-meteor-platform
-accounts-password
 meteorhacks:inject-initial
-differential:vulcanize
 aslagle:reactive-table
 mobile-experience
 mongo
@@ -38,3 +35,4 @@ less
 twbs:bootstrap
 stef:meteor-bootstrap-drawer
 
+peppelg:bootstrap-3-modal

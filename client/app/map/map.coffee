@@ -107,7 +107,7 @@ drawSensorLocations = ( layer_name, radius=3, width=newW, height=newH, klass='se
   .attr('fill', 'blue')
   .attr('title', (d) -> d._id )
   .on( 'click', (d,i) ->
-    window.open('/sensor/'+d._id+'/timechart')
+    Modal.show('sensor_timechart','/sensor/'+d._id+'/timechart')
   )
   .append('title')
   .text((d) -> d._id)

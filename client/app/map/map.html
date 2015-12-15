@@ -22,10 +22,26 @@
 
 
 <template name="sensor_timechart">
-    <paper-dialog>
         <div id="timechart">
-            <iframe src="{{ grafana_uri }}/dashboard-solo/db/{{ dashboard }}?panelId={{ panel_number }}&fullscreen&var-sensor={{ id }}"
-                    width="450" height="200" frameborder="0"></iframe>
+            <div class="modal fade" id="animalsModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Timechart Data</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <iframe src="{{ grafana_uri }}/dashboard-solo/db/{{ dashboard }}?panelId={{ panel_number }}&fullscreen&var-sensor={{ id }}"
+                                    width="450" height="200" frameborder="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </paper-dialog>
 </template>
