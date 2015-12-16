@@ -1,0 +1,47 @@
+<template name="sensor_list">
+    <div id="sensors">
+        <ul class="sensor_list">
+            {{#each sensors}}
+                {{> sensor_item}}
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="sensor_item">
+    <li title="{{ _id }}">
+        <span class="rack">{{ getRack _id }}</span>
+        <span class="aisle">{{ getHotCold _id }}</span>
+        <span class="temp">{{ temp }}&deg;C</span>
+        <span class="pressure">{{ pressure }}hPa</span>
+        <span class="humidity">{{ humidity }}%</span>
+        <span class="lux">{{ lux }}lux</span>
+        <span class="time">{{ livestamp ts }}</span>
+    </li>
+</template>
+
+
+<template name="sensor_timechart">
+        <div id="timechart">
+            <div class="modal fade" id="animalsModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Timechart Data</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <iframe src="{{ grafana_uri }}/dashboard-solo/db/{{ dashboard }}?panelId={{ panel_number }}&fullscreen&var-sensor={{ id }}"
+                                    width="450" height="200" frameborder="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</template>
