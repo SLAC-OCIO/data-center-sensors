@@ -1,3 +1,14 @@
+Template.heatmap.rendered = () ->
+  div = '.heatmap'
+  drawFloorPlan  div, "img/2nd-floor-plan.svg"
+  heatmap = createHeatMap div
+  redrawHeatMap metric
+  drawSensorLocations div
+
+Template.heatmap.events =() ->
+  resize: () ->
+    console.log "cheese"
+
 Template.sensor_table.helpers
   settings: () ->
     return {

@@ -1,3 +1,5 @@
+#Set several global vars here
+@dcscope = {}
 @heatmap = null
 @data = {}
 @metric = 'temp'
@@ -21,6 +23,9 @@
       0.6: 'orange'
 
 
+@heat = null
+@legendCanvas = null
+@legendCtx = null
 @normaliseId = (id) ->
   id.substring(8)
 
@@ -45,8 +50,7 @@
     output.push @getSensor k
   output
 
-
-@meta =
+meta =
   "2303746938a609ee":	[ "2ap13",	378,	276,	"2aq13",	"hot",	"right" ]
   "2308637838a609ee":	[ "2an11",	355,	256,	"2am11",	"hot",	"right" ]
   "230d716938a609ee":	[ "2ap09",	332,	276,	"2aq09",	"hot",	"right" ]
