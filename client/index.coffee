@@ -22,7 +22,7 @@ profiles =
       0.8: 'yellow'
       0.6: 'orange'
 
-drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
+drawFloorPlan = ( layer_name, src, translate=[0,0], scale=[1,1], width=1000, height=800, alpha=0.3, klass='floorplan_overlay' ) ->
   d3.select( layer_name ).append( 'canvas' )
     .style('top', 0)
     .style('left', 0)
@@ -35,15 +35,20 @@ drawFloorPlan = ( layer_name, src, width=1000, height=800, alpha=0.3, klass='flo
     # canvas = layer
     canvas = $('.'+klass)
     ctx = canvas[0].getContext( '2d' )
+    ctx.save()
+    ctx.clearRect(0, 0, width, height);
+    ctx.translate( translate[0], translate[1] )
+    ctx.scale( scale[0], scale[1] ) 
     ctx.globalAlpha = alpha
     ctx.drawImage plan, 50, 0, width, width * plan.height / plan.width
     ctx.globalAlpha = 1.0
+    ctx.restore()
 
 last_metric = null
 redrawHeatMap = ( metric ) ->
   if heatmap?
     if last_metric != metric
-      # console.log 'redraw: %o', heatmap
+      console.log 'redraw: %o with %s', heatmap, metric
       heatmap.configure
         gradient: profiles[metric].gradient 
         radius: profiles[metric].radius
@@ -51,7 +56,7 @@ redrawHeatMap = ( metric ) ->
       max: profiles[metric].max
       min: 0
       data: regenData metric
-    last_metric = metric
+    last_metric = metric    
 
 regenData = ( metric ) ->
   tuples = []
@@ -116,9 +121,25 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
     .attr( 'class', klass )
     .attr( 'width', width )
     .attr( 'height', height )
-  canvas = svg.append('g')
+    .call d3.behavior.zoom().on \
+        "zoom", () -> 
+            dx = d3.event.translate[0]
+            dy = d3.event.translate[1]
+            s1 = d3.event.scale
+            s2 = d3.event.scale
+            # update sensor overlay
+            svg.attr "transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")"
+            # update heatmap (not working)
+            ht = d3.select( "canvas.heatmap-canvas" ).node().getContext("2d")
+            # console.log "ht: %o %s %s (%s)", ht, dx, dy, metric
+            # ht.translate( dx, dy )
+            # update floor plan
+            drawFloorPlan( '.heatmap',  "images/2nd-floor-plan.svg", [dx, dy], [s1,s2] )
+            
+    .append('g')
+  
   console.log 'drawing sensors'
-  canvas.selectAll('circle')
+  svg.selectAll('circle')
     .data( getAllSensors() ).enter()
     .append('circle')
       .attr('class', 'sensor')
@@ -134,6 +155,8 @@ drawSensorLocations = ( layer_name, radius=3, width=1000, height=800, klass='sen
       )
       .append('title')
         .text((d) -> d._id)
+
+    
   
 Template.heatmap.rendered = () ->
   div = '.heatmap'
@@ -141,7 +164,8 @@ Template.heatmap.rendered = () ->
   heatmap = createHeatMap div
   redrawHeatMap metric
   drawSensorLocations div
-  
+
+    
 Sensors.find().observe
   added: (datum) ->
     i = normaliseId( datum._id )
