@@ -147,7 +147,7 @@ Sensors.find().observe
     i = normaliseId( datum._id )
     now = (new Date).getTime() / 1000
     diff = now - datum.ts
-    console.log 'sensor added: %s %o', i, datum
+    # console.log 'sensor added: %s %o', i, datum
     # don't add if too old (5mins?)
     if diff < 300.0
       data[i] = datum
